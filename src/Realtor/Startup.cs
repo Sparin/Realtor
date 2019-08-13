@@ -72,6 +72,8 @@ namespace Realtor
             services.AddAutoMapper();
 
             services.AddTransient<IAdvertisementService, AdvertisementService>();
+            services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IPhoneService, PhoneService>();
 #if DEBUG
             services.AddCors();
 #endif
