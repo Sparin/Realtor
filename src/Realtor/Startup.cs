@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -47,8 +49,20 @@ namespace Realtor
 
             services.AddIdentity<Customer, IdentityRole<int>>()
                 .AddEntityFrameworkStores<RealtorDbContext>()
-                .AddDefaultTokenProviders();                
+                .AddDefaultTokenProviders();
 
+            services.AddAuthentication();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Events.OnRedirectToLogin = context =>
+                {
+                    context.Response.StatusCode = 401;
+                    return Task.CompletedTask;
+                };
+            });
+
+            services.AddAutoMapper();
 #if DEBUG
             services.AddCors();
 #endif
