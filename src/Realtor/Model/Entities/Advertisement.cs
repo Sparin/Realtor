@@ -17,7 +17,7 @@ namespace Realtor.Model.Entities
         [StringLength(100, ErrorMessage = "The short description is too long")]
         public string ShortDescription { get; set; }
 
-        [Range(1, 100, ErrorMessage = "Too many rooms in your apartment. Maximum 100 rooms")]
+        [Range(1, 100, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
         public int RoomsCount { get; set; }
 
         [Column(TypeName = "double(12, 2)")]

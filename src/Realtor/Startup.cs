@@ -19,6 +19,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Realtor.Model.Context;
 using Realtor.Model.Entities;
+using Realtor.Services;
+using Realtor.Services.Interfaces;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Realtor
@@ -60,9 +62,16 @@ namespace Realtor
                     context.Response.StatusCode = 401;
                     return Task.CompletedTask;
                 };
+                options.Events.OnRedirectToAccessDenied = context =>
+                {
+                    context.Response.StatusCode = 403;
+                    return Task.CompletedTask;
+                };
             });
 
             services.AddAutoMapper();
+
+            services.AddTransient<IAdvertisementService, AdvertisementService>();
 #if DEBUG
             services.AddCors();
 #endif
