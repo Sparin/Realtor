@@ -7,5 +7,6 @@ namespace Realtor.Model.DTO.Phone
 {
     public class UpdatePhoneDto
     {
+        public string Number { get; set; }
     }
 }
