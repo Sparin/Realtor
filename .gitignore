@@ -331,3 +331,4 @@ ASALocalRun/
 *.bak
 
 src/Realtor/Realtor.xml
+/src/Realtor/Realtor.db

@@ -7,11 +7,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Realtor.Model.Context;
+using Realtor.Model.Entities;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Realtor
@@ -31,6 +36,19 @@ namespace Realtor
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string realtorDbConnectionString = Configuration.GetConnectionString("RealtorDb");
+
+            services.AddDbContextPool<RealtorDbContext>(options =>
+            {
+                options.UseSqlite(realtorDbConnectionString);
+                if (_env.IsDevelopment())
+                    options.EnableSensitiveDataLogging();
+            }, 128);
+
+            services.AddIdentity<Customer, IdentityRole<int>>()
+                .AddEntityFrameworkStores<RealtorDbContext>()
+                .AddDefaultTokenProviders();                
+
 #if DEBUG
             services.AddCors();
 #endif
@@ -40,11 +58,11 @@ namespace Realtor
                 {
                     options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
                     options.SerializerSettings.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.None;
-                }); ;
+                });
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v0.0.0", new Info { Title = "Orders API", Version = "v0.0.0" });
+                c.SwaggerDoc("v0.0.0", new Info { Title = "Realtor API", Version = "v0.0.0" });
                 c.DescribeAllEnumsAsStrings();
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -74,7 +92,7 @@ namespace Realtor
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v0.0.0/swagger.json", "Orders API");
+                    c.SwaggerEndpoint("/swagger/v0.0.0/swagger.json", "Realtor API");
                 });
             }
 #if DEBUG
@@ -90,6 +108,10 @@ namespace Realtor
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseHttpsRedirection();
+            app.UseCookiePolicy();
+
+            app.UseAuthentication();
+
             app.UseMvc();
         }
     }
