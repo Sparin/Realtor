@@ -21,7 +21,7 @@ class Advertisements extends React.Component<any, any> {
             limit: 50,
             totalPages: 0,
             totalItems: 0,
-            searchOptions: { minimumRooms: 1, maximumRooms: 100, minimumPrice: 100, maximumPrice: 10000, type: "Ask" }
+            searchOptions: { minimumRooms: 1, maximumRooms: 100, minimumPrice: 100, maximumPrice: 1000000, type: "Ask" }
         };
 
         this.applySearchFilters = this.applySearchFilters.bind(this);

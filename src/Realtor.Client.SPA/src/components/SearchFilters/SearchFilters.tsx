@@ -9,7 +9,7 @@ export default class SearchFilters extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
 
-        this.state = { minimumRooms: 1, maximumRooms: 100, minimumPrice: 1, maximumPrice: 10000 } as SearchOptions;
+        this.state = { minimumRooms: 1, maximumRooms: 100, minimumPrice: 1, maximumPrice: 1000000 } as SearchOptions;
     }
 
     onSubmit = (event: any) => {
@@ -34,7 +34,7 @@ export default class SearchFilters extends React.Component<any, any> {
                     <Slider
                         range
                         value={[this.state.minimumPrice, this.state.maximumPrice]}
-                        max={10000}
+                        max={1000000}
                         min={1}
                         onChange={(values: any) => this.setState({ minimumPrice: values[0], maximumPrice: values[1] })} />
                 </Form.Item>
