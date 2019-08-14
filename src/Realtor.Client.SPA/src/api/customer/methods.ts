@@ -1,5 +1,5 @@
 import { Phone, Customer } from './models';
-import makeHttpRequest, { defaultPage, defaultLimit } from '../makeHttpRequest';
+import makeHttpRequest from '../makeHttpRequest';
 
 export function getCustomer(id: number): Promise<Customer> {
     const url = `/api/customer/${id}`;

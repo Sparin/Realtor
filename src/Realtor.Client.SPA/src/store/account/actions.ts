@@ -16,7 +16,7 @@ export const ACCOUNT_LOGOUT_FAILED = 'ACCOUNT_LOGOUT_FAILED';
 
 export const Actions = {
     login: (username: string, password: string, rememberLogin: boolean) => (dispatch: Dispatch, getState: Function) => {
-        if (getState().user.isLoading)
+        if (getState().account.isLoading)
             return;
         dispatch({ type: ACCOUNT_LOGIN_REQUEST });
 

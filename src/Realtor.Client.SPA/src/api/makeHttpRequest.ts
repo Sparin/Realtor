@@ -13,10 +13,11 @@ export default function makeHttpRequest<T>(
     headers.append("Accept", "application/json");
     headers.append("Content-Type", "application/json");
 
-    const options = {
+    const options: RequestInit = {
         method: method,
         headers: headers,
-        body: JSON.stringify(body)
+        body: JSON.stringify(body),
+        credentials: 'include'
     }
 
     return new Promise<T>((resolve, reject) =>

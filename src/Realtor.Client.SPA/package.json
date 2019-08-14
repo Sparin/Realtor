@@ -1,6 +1,7 @@
 {
   "name": "realtor.client.spa",
   "version": "0.1.0",
+  "proxy": "http://localhost:5000",
   "private": true,
   "dependencies": {
     "@types/jest": "24.0.17",
