@@ -328,3 +328,7 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+*.bak
+
+src/Realtor/Realtor.xml
+/src/Realtor/Realtor.db
